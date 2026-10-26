@@ -24,5 +24,30 @@ let noteNumber = 0;
 // 2. SETUP: this runs only once.
 function setup() {
   // EXTRA: windowWidth and windowHeight fit the canvas to the browser.
-  // https://
+  // https://v1.p5js.org/reference/p5/windowWidth/
+  // https://v1.p5js.org/reference/p5/windowHeight/
+  createCanvas(windowWidth, windowHeight);
+  frameRate(60);
+  for (let i = 0; i < 30; i++) {
+    starX[i] = random(0, 1);
+    starY[i] = random(0.08, 0.42);
+  }
+  // EXTRA: an oscillator makes a tone; an envelope makes it fade gently.
+  // https://v1.p5js.org/reference/p5.sound/p5.Oscillator/
+  // https://v1.p5js.org/reference/p5.sound/p5.Envelope/
+  // https://v1.p5js.org/reference/p5.Envelope/setADSR/
+  // https://v1.p5js.org/reference/p5.Envelope/setRange/
+  chime = new p5.Oscillator("sine");
+  chime.amp(0);
+  envelope = new p5.Envelope();
+  envelope.setADSR(0.05, 0.2, 0.1, 1.8);
+  envelope.setRange(0.12, 0);
+}
+
+// 3. DRAW: updating the controls, then drawing the landscape again.
+function draw() {
+  currentHeight = waveHeight;
+  readController();
+  if (keyIsDown(LEFT_ARROW)) moonX -= 0.003;
+  if (keyIsDown(RIGHT_ARROW)) moonX += 0.003;
 }
